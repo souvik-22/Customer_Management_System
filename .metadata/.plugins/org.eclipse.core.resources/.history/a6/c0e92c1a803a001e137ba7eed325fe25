@@ -1,0 +1,23 @@
+package com.amdocs.java;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class CustomerOperation {
+	private Connection conn;
+
+	public CustomerOperation() throws SQLException {
+		this.conn = DatabaseManager.getConnection();
+	}
+
+	public void addUser(User user) throws SQLException {
+		String query = "INSERT INTO cms_users (username, user_password, user_role) VALUES (?, ?, ?)";
+		try (PreparedStatement statement = conn.prepareStatement(query)) {
+			statement.setString(1, user.getUsername());
+			statement.setString(2, user.getPassword());
+			statement.setString(3, user.getRole());
+			statement.executeUpdate();
+		}
+	}
+}

@@ -1,0 +1,38 @@
+package com.amdocs.java;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class CustomerOperation {
+	private Connection conn;
+
+	public CustomerOperation() throws SQLException {
+		this.conn = DatabaseManager.getConnection();
+	}
+
+	// Insert
+	public void addCustomer(Customer cust) throws SQLException {
+		String query = "INSERT INTO cms_customers (cust_id, cust_name, cust_email, cust_address, cust_contactNumber) VALUES (cust_id_seq.NEXTVAL, ?, ?, ?, ?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, cust.getName());
+		statement.setString(2, cust.getEmail());
+		statement.setString(3, cust.getAddress());
+		statement.setString(4, cust.getContactNumber());
+		statement.executeUpdate();
+	}
+	
+	// View
+	public void viewAllCustomers() throws SQLException {
+		String query = "SELCT * FROM cms_customers";
+		PreparedStatement statement = conn.prepareStatement(query);
+		ResultSet result = statement.executeQuery();
+		
+	}
+	
+	
+	// Update
+	
+	// Delete
+}
